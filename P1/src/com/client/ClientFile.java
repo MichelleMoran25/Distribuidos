@@ -60,7 +60,7 @@ public class ClientFile {
 		
 		catch (Exception e){
 			
-			System.out.println("Error " + e.getMese());
+			System.out.println("Error " + e.getMessage());
 			
 		}
 	}
