@@ -61,7 +61,6 @@ public class ClientFile {
 		catch (Exception e){
 			
 			System.out.println("Error " + e.getMessage());
-			//Añadiendo un comentario
 			
 		}
 	}
