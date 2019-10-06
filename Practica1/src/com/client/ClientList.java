@@ -2,32 +2,37 @@ package com.client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.LinkedList;
 
-public class Client {
+public class ClientList {
 	
 	  static final String HOST = "localhost";
-	  static final int PORT=5000;
+	  static final int PORT=5001;
 	  static Socket sc;
 
 	public static void main(String[] args) {
 		
 		System.out.println("Starting client...\n");
-		iniciarCliente();
+		iniciateServer();
 		
 	}
 	
-	public static void iniciarCliente() {
+	public static void iniciateServer() {
 		
 		try {
 			
-			//sc = new Socket(HOST, PORT);
+			sc = new Socket(HOST, PORT);
 			
 			DataOutputStream output = new  DataOutputStream(sc.getOutputStream());
-			DataInputStream input = new DataInputStream(sc.getInputStream());
+			ObjectOutputStream outputObject = new ObjectOutputStream(sc.getOutputStream());
+			ObjectInputStream inputObject = new ObjectInputStream(sc.getInputStream());
 			
 			LinkedList<String> names = new LinkedList<String>();
+			
+			System.out.println("Original List: ");
 			names.add("Estela");
 			names.add("Michelle");
 			names.add("Mike");
@@ -36,16 +41,20 @@ public class Client {
 			names.add("Juanito");
 			names.add("Maria");
 			names.add("Ancelmo");
-			names.add("Carro");
+			names.add("Caro");
 			names.add("Pedrito");
-			names.add("Zeta");
-			names.add("Wow");
+			names.add("Zaide");
+			names.add("Wiliam");
+			names.add("Elisa");
+									
+			System.out.println(names);
 			
-			for (String name : names) {
-				
-				System.out.println(name);
-				
-			}
+			output.writeInt(1);
+			outputObject.writeObject(names);
+			
+			System.out.println("\nOrdered List:");
+			Object orderedNameList = inputObject.readObject();
+			System.out.println(orderedNameList);
 			
 			sc.close();
 			
