@@ -21,7 +21,7 @@ import java.util.List;
 public class Thread2 extends Thread {
 	
     private String name;
-    static final int PUERTO = 5001;
+    static final int PUERTO = 5002;
     static ServerSocket sc;
     static Socket so;
 
