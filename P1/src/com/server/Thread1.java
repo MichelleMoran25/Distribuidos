@@ -98,10 +98,8 @@ public class Thread1 extends Thread {
 	                /*file = new File ("test.txt");
 	                fr = new FileReader (fileIn);
 	                br = new BufferedReader(fr);
-
 	                String linea;
 	                int contador = 0;
-
 	                while((linea = br.readLine())!=null){
 	                    String sarray[] = linea.split(" ");
 	                    for (int i = 0; i < sarray.length; i++) {
