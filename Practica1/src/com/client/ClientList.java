@@ -26,9 +26,9 @@ public class ClientList {
 			
 			sc = new Socket(HOST, PORT);
 			
-			DataOutputStream output = new  DataOutputStream(sc.getOutputStream());
-			ObjectOutputStream outputObject = new ObjectOutputStream(sc.getOutputStream());
-			ObjectInputStream inputObject = new ObjectInputStream(sc.getInputStream());
+			DataOutputStream out = new  DataOutputStream(sc.getOutputStream());
+			ObjectOutputStream outObject = new ObjectOutputStream(sc.getOutputStream());
+			ObjectInputStream inObject = new ObjectInputStream(sc.getInputStream());
 			
 			LinkedList<String> names = new LinkedList<String>();
 			
@@ -49,11 +49,11 @@ public class ClientList {
 									
 			System.out.println(names);
 			
-			output.writeInt(1);
-			outputObject.writeObject(names);
+			out.writeInt(1);
+			outObject.writeObject(names);
 			
 			System.out.println("\nOrdered List:");
-			Object orderedNameList = inputObject.readObject();
+			Object orderedNameList = inObject.readObject();
 			System.out.println(orderedNameList);
 			
 			sc.close();

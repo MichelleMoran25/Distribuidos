@@ -49,6 +49,7 @@ public class Thread1 extends Thread {
 			DataInputStream in= new DataInputStream(so.getInputStream());
 			
 			int selection = in.readInt();
+			System.out.println(selection);
 			
 			if (selection == 1) {
 	            
@@ -63,6 +64,8 @@ public class Thread1 extends Thread {
 
 														
 			}else if (selection == 2) {
+				
+				System.out.println("llega aqui");
 
 	            File file = null;
 	            FileReader fr = null;
