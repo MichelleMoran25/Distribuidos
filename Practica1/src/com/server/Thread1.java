@@ -1,11 +1,14 @@
 package com.server;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -40,23 +43,23 @@ public class Thread1 extends Thread {
 			System.out.println("Client has connected to " + name);
 			
 
-			ObjectInputStream inputObject = new ObjectInputStream(so.getInputStream());
-			ObjectOutputStream outputObject = new ObjectOutputStream(so.getOutputStream());
-			DataOutputStream output= new DataOutputStream(so.getOutputStream());
-			DataInputStream input= new DataInputStream(so.getInputStream());
+			ObjectInputStream inObject = new ObjectInputStream(so.getInputStream());
+			ObjectOutputStream outObject = new ObjectOutputStream(so.getOutputStream());
+			DataOutputStream out= new DataOutputStream(so.getOutputStream());
+			DataInputStream in= new DataInputStream(so.getInputStream());
 			
-			int selection = input.readInt();
+			int selection = in.readInt();
 			
 			if (selection == 1) {
 	            
-				Object clientNames = inputObject.readObject();
+				Object clientNames = inObject.readObject();
 				
 				List<String> clientNamesList = new ArrayList();
 				clientNamesList.addAll((Collection<? extends String>) clientNames);
 				
 				Collections.sort(clientNamesList);
 				
-				outputObject.writeObject(clientNamesList);
+				outObject.writeObject(clientNamesList);
 
 														
 			}else if (selection == 2) {
@@ -67,11 +70,30 @@ public class Thread1 extends Thread {
 
 	            try {
 	            	
-	            	Object clientFile = inputObject.readObject();
+	            	byte data[] = new byte[2048]; // Here you can increase the size also which will receive it faster
+	                
+	            	FileOutputStream fileOut = new FileOutputStream("receivedTest.txt");
+	                InputStream fileIn = so.getInputStream();
+	                BufferedOutputStream fileBuffer = new BufferedOutputStream(fileOut);
+	                
+	                int count;
+	                int sum = 0;
+	                
+	                while ((count = fileIn.read(data)) > 0) {
+	                	
+	                    sum += count;
+	                    fileBuffer.write(data, 0, count);
+	                    System.out.println("Data received : " + sum);
+	                    fileBuffer.flush();
+	                }
+	                
+	                System.out.println("File Received...");
+	                
 	            	
+
 	            	
-	                file = new File ("prueba.txt");
-	                fr = new FileReader (file);
+	                /*file = new File ("test.txt");
+	                fr = new FileReader (fileIn);
 	                br = new BufferedReader(fr);
 
 	                String linea;
@@ -85,7 +107,7 @@ public class Thread1 extends Thread {
 	                        }
 	                    }
 	                }
-	                System.out.println(contador);
+	                System.out.println(contador);*/
 	            }
 
 	            catch(Exception e){
